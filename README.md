@@ -33,7 +33,21 @@ if (ask == true) {
 ### 3. 添加环境变量至 Secrets
 
 - 回到项目页面，依次点击`Settings`-->`Secrets`-->`New secret`
-
 - 建立名为`COOKIE`的 secret，值为米游社复制的`Cookie`内容，最后点击`Add secret`
 
+
+### 4. 添加通知
+
 - 邮件通知需添加 `MAIL_HOST` `MAIL_USERNAME` `MAIL_PASSWORD` `MAIL_USERNAME_TO` 环境变量
+
+  `MAIL_HOST` 如 pop.qq.com
+
+   `MAIL_USERNAME`  如 xxxxx@qq.com
+
+  `MAIL_PASSWORD` qq邮箱的授权码
+
+   `MAIL_USERNAME_TO` 收件人
+
+- server酱
+
+  添加`SERVER_KEY`  环境变量即可
