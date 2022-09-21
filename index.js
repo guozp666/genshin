@@ -4,6 +4,7 @@ const nodemailer = require('nodemailer')
 const undici = require('undici')
 
 let transporter
+
 if (process.env.MAIL_HOST && process.env.MAIL_USERNAME && process.env.MAIL_PASSWORD) {
   transporter = nodemailer.createTransport({
     host: process.env.MAIL_HOST,
@@ -39,17 +40,21 @@ function sendMail(text) {
 
 async function main() {
   debug('开始', new Date().toLocaleString())
+
   if (!process.env.COOKIE) {
     debug('环境变量 COOKIE 未配置，退出...')
     process.exit()
   }
   const response = await apis.getUserGameRoles()
+
   if (response.data) {
     const [role] = response.data.list
     const rewardInfo = await apis.getRewardInfo(role.region, role.game_uid)
+
     if (rewardInfo.retcode !== 0) {
       debug(rewardInfo.message)
       sendMail(rewardInfo.message)
+      send_server(rewardInfo.message)
       return
     }
 
@@ -59,12 +64,13 @@ async function main() {
       send_server('请先前往米游社App手动签到一次~')
       return
     }
+
     if (!rewardInfo.data.is_sign) {
       debug('开始签到')
       const result = await apis.bbsSignReward(role.region, role.game_uid)
       debug(result.message)
       sendMail(result.message)
-      send_server('result.message')
+      send_server(result.message)
     } else {
       debug('已签到')
       sendMail('已签到')
@@ -72,5 +78,5 @@ async function main() {
     }
   }
 }
-main()
 
+main()
