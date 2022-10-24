@@ -4,7 +4,7 @@ name: "Genshin Impact Helper"
 on:
   schedule:
     # scheduled at 00:30 (UTC+8) everyday
-    - cron: "0 30 8 * * * *"
+    - cron: "30 8 * * *"
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
